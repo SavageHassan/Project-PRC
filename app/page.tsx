@@ -60,30 +60,28 @@ export default function Home() {
     <>
       <AudienceHero />
 
-      <Section labelledBy="about-intro">
-        <div className="split split--center">
-          <div className="span-6 stack">
-            <span className="label">About Project PRC</span>
-            <h2 className="h2" id="about-intro">Helping Students Stay Housed and Enrolled</h2>
-            <p>
+      <Section labelledBy="about-intro" className="intro2">
+        <div className="intro2__head">
+          <span className="label">About Project PRC</span>
+          <h2 className="h2" id="about-intro">Helping Students Stay Housed and Enrolled</h2>
+        </div>
+        <div className="intro2__film">
+          <Video provider="vimeo" id="1188830283" title="Solving the Student Housing Crisis through Project PRC" duration="2:31" />
+        </div>
+        <div className="intro2__text">
+          <p>
               Based in Dallas, Texas, we are an IRS approved 501(c)(3) nonprofit organization with a mission to serve our community by
               developing and re-developing properties that lessen the burden on government. We are not affiliated with any religious or
               political groups, but we do believe that everyone deserves access to safe, affordable, and high-quality housing, and we work
               tirelessly to make that a reality.
             </p>
-            <p>
+          <p>
               Our team is dedicated to solving today’s housing crisis and adding value to communities across America. We do this by
               partnering with government entities, public and private schools and universities, other organizations, and donors to create P3
               partnerships that benefit all involved. We also specialize in student housing, low to moderate income housing, and the
               redevelopment of abandoned properties.
             </p>
-            <div style={{ paddingTop: 8 }}>
-              <Button href="/about-us/">Learn More<Arrow /></Button>
-            </div>
-          </div>
-          <div className="span-6">
-            <Video provider="vimeo" id="1188830283" title="Solving the Student Housing Crisis through Project PRC" duration="2:31" />
-          </div>
+          <div className="intro2__more"><Button href="/about-us/">Learn More<Arrow /></Button></div>
         </div>
       </Section>
 
