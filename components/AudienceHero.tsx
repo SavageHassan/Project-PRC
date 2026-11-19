@@ -99,6 +99,7 @@ export default function AudienceHero() {
       if (t) setBar({ left: t.offsetLeft, width: t.offsetWidth });
     };
     place();
+    document.fonts?.ready.then(place);
     window.addEventListener("resize", place);
     return () => window.removeEventListener("resize", place);
   }, [active]);
