@@ -887,22 +887,34 @@ a:hover .photo img, .photo:hover img { transform: scale(1.04); }
 .board2__card p { color: var(--mute); font-size: 0.9375rem; }
 
 /* ---------- shop ---------- */
-.shop { padding-block: clamp(48px, 7vw, 112px); background: var(--white); overflow: hidden; }
-.shop__grid { display: grid; gap: 48px; align-items: center; }
-@media (min-width: 960px) { .shop__grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
-.shop__copy { display: grid; gap: 22px; }
-.shop__alt { display: grid; gap: 6px; margin-top: 12px; padding: 18px 20px; border-radius: 14px; background: var(--paper); border-left: 3px solid var(--blue); }
-.shop__art { position: relative; aspect-ratio: 1; max-width: 520px; width: 100%; justify-self: center; border-radius: 50%; background: radial-gradient(circle at 50% 45%, var(--blue-tint), var(--paper) 70%); }
-.shop__tee { position: absolute; left: 50%; top: 50%; width: 62%; transform: translate(-50%, -50%); filter: drop-shadow(0 24px 30px rgba(15, 27, 49, 0.22)); }
-.shop__tee svg { display: block; width: 100%; height: auto; }
-.shop__tee path { fill: var(--white); stroke: #dfe3e8; stroke-width: 2; }
-.shop__tee--back { width: 50%; left: 70%; top: 40%; filter: none; opacity: 0.9; }
-.shop__tee--back path { fill: var(--navy); stroke: none; }
-.shop__logo { position: absolute; left: 50%; top: 38%; width: 34%; height: auto; transform: translateX(-50%); }
-.shop__tag { position: absolute; left: 6%; bottom: 14%; padding: 10px 16px; border-radius: 999px; background: var(--blue-btn); color: var(--white); font-weight: 700; font-size: 0.9375rem; box-shadow: var(--shadow); }
+.shop-hero { padding-block: clamp(36px, 5vw, 72px) 0; background: var(--white); }
+.shop-hero__head { display: grid; gap: 16px 64px; align-items: end; margin-bottom: clamp(24px, 3vw, 40px); }
+@media (min-width: 900px) { .shop-hero__head { grid-template-columns: 1fr 1fr; } }
+.shop-hero__banner { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: #1f6fb2; box-shadow: var(--shadow-lg); }
+.shop-hero__banner img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 1; object-fit: cover; }
+@media (max-width: 700px) { .shop-hero__banner img { aspect-ratio: 4 / 3; object-position: 52% center; } }
+.shop-hero__badge { position: absolute; left: 20px; bottom: 20px; padding: 8px 16px; border-radius: 999px; background: var(--white); color: var(--navy); font-weight: 700; font-size: 0.9063rem; box-shadow: var(--shadow); }
+.shop-collection__head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: clamp(24px, 3vw, 40px); }
+.merch { list-style: none; display: grid; gap: 20px; }
+@media (min-width: 640px) { .merch { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .merch { grid-template-columns: repeat(4, 1fr); } }
+.merch__card { display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: var(--white); box-shadow: 0 1px 0 var(--line); transition: transform 300ms var(--ease-out), box-shadow 300ms var(--ease); }
+.merch__card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.merch__photo { aspect-ratio: 4 / 5; background-color: #1f6fb2; background-repeat: no-repeat; background-size: auto 100%; background-position-y: center; transition: background-size 900ms var(--ease-out); }
+.merch__card:hover .merch__photo { background-size: auto 106%; }
+.merch__body { display: grid; gap: 6px; padding: 18px 20px 22px; }
+.merch__body h3 { font-size: 1.15rem; font-weight: 600; }
+.merch__body p { color: var(--mute); font-size: 0.9375rem; }
+.merch__status { justify-self: start; margin-top: 6px; padding: 4px 10px; border-radius: 999px; background: var(--blue-tint); color: var(--blue-deep); font-size: 0.8125rem; font-weight: 700; }
+.shop-message { background: var(--navy); color: var(--white); padding-block: clamp(56px, 7vw, 104px); }
+.shop-message__inner { display: grid; gap: 32px; align-items: center; }
+@media (min-width: 960px) { .shop-message__inner { grid-template-columns: 1.2fr 1fr; gap: 64px; } }
+.shop-message__quote { font: 600 clamp(2.2rem, 1.4rem + 3vw, 4rem)/1.08 var(--font-head); letter-spacing: -0.015em; }
+.shop-message__quote span { color: var(--sky); }
+.shop-message__copy { display: grid; gap: 22px; color: var(--on-dark); font-size: 1.0625rem; }
 @media (prefers-reduced-motion: no-preference) {
-  .js .shop__tee:not(.shop__tee--back) { animation: float 6s ease-in-out infinite; }
-  .js .shop__copy > * { opacity: 0; transform: translateY(16px); animation: rise 800ms var(--ease-out) forwards; }
-  .js .shop__copy > :nth-child(2) { animation-delay: 100ms; } .js .shop__copy > :nth-child(3) { animation-delay: 200ms; } .js .shop__copy > :nth-child(4) { animation-delay: 300ms; } .js .shop__copy > :nth-child(5) { animation-delay: 400ms; }
+  .js .shop-hero__head > * { opacity: 0; transform: translateY(16px); animation: rise 800ms var(--ease-out) forwards; }
+  .js .shop-hero__head > :nth-child(2) { animation-delay: 120ms; }
+  .js .shop-hero__banner { clip-path: inset(8% 4% 0 4% round 20px); animation: frame-open 1200ms var(--ease-out) 200ms forwards; }
 }
-@keyframes float { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-50%, -54%); } }
+@keyframes frame-open { to { clip-path: inset(0 0 0 0 round 20px); } }
