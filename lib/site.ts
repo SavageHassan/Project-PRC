@@ -122,7 +122,7 @@ export const nav: NavGroup[] = [
       { label: "Articles", href: "/blog/" },
       { label: "College Housing Today", href: "/magazine/", description: "Our magazine for students, parents and property owners" },
       { label: "Program guides", href: "/resources/", description: "Downloadable PDFs" },
-      { label: "Shop", href: "https://project-prc-shop.printify.me/", external: true },
+      { label: "Shop", href: "/shop/" },
     ],
   },
 ];
@@ -143,6 +143,6 @@ export const footerQuick: NavItem[] = [
   { label: "Events", href: "/our-events/" },
   { label: "Articles", href: "/blog/" },
   { label: "Volunteer", href: "/volunteer/" },
-  { label: "Shop", href: "https://project-prc-shop.printify.me/", external: true },
+  { label: "Shop", href: "/shop/" },
   { label: "Contact", href: "/contact/" },
 ];
