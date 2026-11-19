@@ -1,3 +1,4 @@
+import type React from "react";
 import { giveFormUrl, org, PREVIEW } from "@/lib/site";
 import ReviewsSlider from "./ReviewsSlider";
 import { Button, ContactDetails, Downloads } from "./ui";
@@ -48,22 +49,29 @@ export function GiveForm() {
 
 /** Band reused at the end of program pages: "Your gift makes a real difference." */
 export function DonateBand({ heading = "Your gift makes a real difference." }: { heading?: string }) {
+  const rise = [0, 40, 80, 130];
   return (
-    <section className="section section--ink on-dark" aria-labelledby="donate-band">
+    <section className="section section--ink on-dark gscale" aria-labelledby="donate-band">
       <div className="container">
-        <div className="split">
-          <div className="span-5 stack">
-            <h2 className="h2" id="donate-band">{heading}</h2>
+        <div className="gscale__head">
+          <h2 className="h2" id="donate-band">{heading}</h2>
+          <div className="gscale__meta">
             <p className="lead">All donations are tax-deductible.</p>
             <p className="small muted">EIN: {org.ein}. {org.status}</p>
-            <div className="btn-row" style={{ marginTop: 28 }}>
-              <Button href="/donate-now/">Donate now</Button>
-              <Button href="/rent-subsidy-program/" variant="outline">Where your donation goes</Button>
-            </div>
           </div>
-          <div className="span-7">
-            <DonationLadder />
-          </div>
+        </div>
+        <ol className="gscale__steps">
+          {ladder.map((l, i) => (
+            <li key={l.amount} style={{ "--rise": rise[i] } as React.CSSProperties}>
+              <span className="gscale__bar" aria-hidden="true" />
+              <strong>{l.amount}<small> /mo</small></strong>
+              <span>{l.text}</span>
+            </li>
+          ))}
+        </ol>
+        <div className="btn-row gscale__actions">
+          <Button href="/donate-now/">Donate now</Button>
+          <Button href="/rent-subsidy-program/" variant="outline">Where your donation goes</Button>
         </div>
       </div>
     </section>
