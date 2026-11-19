@@ -1,40 +1,12 @@
 import Image from "next/image";
+import AudienceHero from "@/components/AudienceHero";
+import ApproachExplorer from "@/components/ApproachExplorer";
 import Link from "next/link";
-import { Button, Photo, RoofMark, Section, SectionHead } from "@/components/ui";
+import { Button, Photo, Section, SectionHead } from "@/components/ui";
 import { CtaBand, DonateBand, ReviewsBand } from "@/components/blocks";
 import { Video } from "@/components/interactive";
 import { images, media } from "@/lib/media";
 
-const doors = [
-  {
-    who: "Renters",
-    title: "I'm a renter who needs assistance",
-    desc: "Rental assistance and eviction avoidance for residents of Network of Communities properties.",
-    href: "/join-noc-tenants/",
-    go: "See if you qualify",
-  },
-  {
-    who: "Property managers",
-    title: "I'm a property manager looking to join",
-    desc: "Reduce evictions, preserve occupancy, and protect your revenue.",
-    href: "/join-noc-apartments/",
-    go: "Join the Network",
-  },
-  {
-    who: "Donors",
-    title: "I want to help fight homelessness",
-    desc: "All donations are tax-deductible. $20 a month can help prevent utility shut off for students or families.",
-    href: "/donate-now/",
-    go: "Donate",
-  },
-  {
-    who: "Businesses",
-    title: "My company wants to partner",
-    desc: "Support student housing scholarships, rental assistance, and financial education.",
-    href: "/corporate-partnerships/",
-    go: "Explore partnerships",
-  },
-];
 
 const programs = [
   {
@@ -86,78 +58,11 @@ const programIcons = [
 export default function Home() {
   return (
     <>
-      <section className="hero hero2" aria-labelledby="hero-title">
-        <svg className="hero2__bgroof" viewBox="0 0 1440 420" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMin slice">
-          <path d="M-40 400 L720 30 L1480 400" />
-          <path d="M80 400 L720 92 L1360 400" />
-        </svg>
-        <div className="container">
-          <div className="hero2__top">
-            <div className="hero2__title-wrap">
-              <span className="pill">
-                <span className="pill__icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24"><path d="M4 11.5L12 5l8 6.5V20h-5.5v-5h-5v5H4z" fill="currentColor" /></svg>
-                </span>
-                Housing Solutions
-              </span>
-              <h1 className="display hero2__title" id="hero-title">
-                <span className="hero2__line"><span>Affordable <em>Housing</em></span></span>
-                <span className="hero2__line"><span>is a Human Right</span></span>
-              </h1>
-            </div>
-            <div className="hero2__intro">
-              <p>
-                There is a significant need for affordable housing in the United States. According to the National Low Income Housing
-                Coalition, there is a shortage of 7.2 million affordable and available rental homes for extremely low income renters.
-              </p>
-              <div className="btn-row">
-                <Button href="/donate-now/">Donate Now</Button>
-                <Button href="/about-us/" variant="outline">About Project PRC</Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="hero2__media">
-            <div className="hero2__frame">
-              <div className="hero2__img" data-parallax="0.08">
-                <Image src={media(images.homeHero.path)} alt={images.homeHero.alt} fill priority sizes="100vw" />
-              </div>
-            </div>
-            <div className="hero2__ctas">
-              <Link href="/join-noc-tenants/" className="hero2__cta hero2__cta--dark">
-                <span className="hero2__cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="15" r="4" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M11 12l8-8m-3 3l2 2m-4 0l2 2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg></span>
-                I&apos;m a Renter Who Needs Assistance
-              </Link>
-              <Link href="/join-noc-apartments/" className="hero2__cta hero2__cta--blue">
-                <span className="hero2__cta-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V9l8-5 8 5v11h-6v-6h-4v6z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg></span>
-                I&apos;m a Property Manager Looking to Join
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <nav className="doors" aria-label="Find your way in">
-          <div className="container">
-            <ul className="doors__list">
-              {doors.map((d) => (
-                <li className="door" key={d.href}>
-                  <Link href={d.href}>
-                    <RoofMark className="door__roof" />
-                    <span className="door__who">{d.who}</span>
-                    <span className="door__title">{d.title}</span>
-                    <span className="door__desc">{d.desc}</span>
-                    <span className="door__go">{d.go}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
-      </section>
+      <AudienceHero />
 
       <Section labelledBy="about-intro">
         <div className="split split--center">
-          <div className="span-6 order-2 stack">
+          <div className="span-6 stack">
             <span className="label">About Project PRC</span>
             <h2 className="h2" id="about-intro">Helping Students Stay Housed and Enrolled</h2>
             <p>
@@ -176,7 +81,7 @@ export default function Home() {
               <Button href="/about-us/">Learn More<Arrow /></Button>
             </div>
           </div>
-          <div className="span-6 order-1">
+          <div className="span-6">
             <Video provider="vimeo" id="1188830283" title="Solving the Student Housing Crisis through Project PRC" duration="2:31" />
           </div>
         </div>
@@ -225,33 +130,31 @@ export default function Home() {
       </Section>
 
       <Section tone="white" labelledBy="mission">
-        <div className="split split--center">
-          <div className="span-5">
+        <div className="mission">
+          <div className="mission__intro">
             <h2 className="h2" id="mission">Our Mission &amp; Cause</h2>
-          </div>
-          <div className="span-7">
             <p className="lead">
               At Project PRC Corporation, our mission is to empower people, groups, and companies the ability to change lives by making tax
               deductible donations that build affordable homes and fight homelessness in America. Our strong conviction is that safe,
               affordable, and high-quality housing should be accessible to all, and we work ceaselessly to make this a reality through your
               tax deductible donations.
             </p>
+            <div className="mission__photo">
+              <Image src={media(images.missionFamily.path)} alt={images.missionFamily.alt} fill sizes="(min-width: 960px) 40vw, 100vw" />
+            </div>
           </div>
-        </div>
-        <div className="mission-panel" data-reveal="panel">
-          <div className="mission-panel__bg" data-parallax="0.06">
-            <Image src={media(images.missionFamily.path)} alt="" fill sizes="(min-width: 1280px) 1280px, 100vw" />
-          </div>
-          <ol className="mission-panel__cols">
+          <ol className="path" data-path>
             {[
               { title: "Identify Opportunities", body: "Our team is dedicated to finding innovative solutions to today’s housing crisis and adding value to communities across America. We do this through a variety of means." },
               { title: "Build Communities", body: "We work closely with government entities, public and private schools and universities, private donors, and other organizations to create P3 partnerships that benefit all involved." },
               { title: "Change Lives", body: "Everyone deserves a place to call home, regardless of their income. That’s why we are committed to developing and managing low to moderate income housing properties" },
             ].map((c, i) => (
-              <li className="mission-panel__col" key={c.title}>
-                <span className="mission-panel__n" aria-hidden="true">0{i + 1}</span>
-                <h3>{c.title}</h3>
-                <p>{c.body}</p>
+              <li className="path__step" key={c.title}>
+                <span className="path__n" aria-hidden="true">{i + 1}</span>
+                <div>
+                  <h3>{c.title}</h3>
+                  <p>{c.body}</p>
+                </div>
               </li>
             ))}
           </ol>
@@ -259,30 +162,11 @@ export default function Home() {
       </Section>
 
       <Section labelledBy="approach">
-        <div className="split split--center" style={{ marginBottom: "clamp(32px, 4vw, 56px)" }}>
-          <div className="span-6">
-            <h2 className="h2" id="approach">Our Approach</h2>
-          </div>
-          <div className="span-6 stack">
-            <p className="muted">
-              Our team is dedicated to finding innovative solutions to today’s housing crisis and adding value to communities across America.
-              We do this through a variety of means, including:
-            </p>
-          </div>
-        </div>
-        <ul className="acards">
-          {approach.map((a) => (
-            <li className="acard" key={a.title}>
-              <div className="acard__img">
-                <Image src={media(a.img.path)} alt="" fill sizes="(min-width: 900px) 33vw, 100vw" />
-              </div>
-              <div className="acard__body">
-                <h3>{a.title}</h3>
-                <p>{a.text}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <SectionHead title="Our Approach" id="approach">
+          Our team is dedicated to finding innovative solutions to today’s housing crisis and adding value to communities across America. We
+          do this through a variety of means, including:
+        </SectionHead>
+        <ApproachExplorer items={approach} />
       </Section>
 
       <DonateBand />
@@ -293,7 +177,7 @@ export default function Home() {
         title="Make a Difference Today – Build a Brighter Future!"
         actions={
           <>
-            <Button href="/donate-now/" variant="dark">Donate Now</Button>
+            <Button href="/donate-now/">Donate Now</Button>
             <Button href="/volunteer/" variant="light">Become a Dreamer<Arrow /></Button>
           </>
         }

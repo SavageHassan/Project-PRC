@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Button, Photo, Section } from "@/components/ui";
+import { Button, Section, SectionHead } from "@/components/ui";
 import { CtaBand } from "@/components/blocks";
 import { Video } from "@/components/interactive";
 import { images, media } from "@/lib/media";
@@ -40,40 +40,28 @@ const what = [
 export default function AboutPage() {
   return (
     <>
-      <header className="banner-hero">
-        <div className="container">
-          <div className="banner-hero__frame">
-            <div className="banner-hero__img" data-parallax="0.1">
-              <Image src={media(images.aboutHero.path)} alt="" fill priority sizes="100vw" />
+      <header className="about-hero" data-no-reveal>
+        <div className="container about-hero__grid">
+          <div className="about-hero__copy">
+            <p className="label">About us</p>
+            <h1 className="h1">Building a Better Future Through Affordable Housing</h1>
+            <p className="lead muted">
+              A Dallas nonprofit developing apartment communities, student housing, and low to moderate income housing since 2022.
+            </p>
+            <div className="btn-row">
+              <Button href="#began" variant="outline">Our story</Button>
+              <Button href="#board" variant="outline">Meet the board</Button>
             </div>
-            <div className="banner-hero__copy">
-              <span className="pill pill--glass">About Us</span>
-              <h1 className="h1">Building a Better Future Through Affordable Housing</h1>
-            </div>
+          </div>
+          <div className="about-hero__media">
+            <Video provider="vimeo" id="1141546313" title="Project PRC: The Social Impact Engine" duration="1:34" />
           </div>
         </div>
       </header>
 
-      <section className="section section--flush-top" aria-label="Video: about Project PRC">
-        <div className="container">
-          <div className="feature-video" data-reveal="panel">
-            <Video provider="vimeo" id="1141546313" title="Project PRC: The Social Impact Engine" duration="1:34" />
-          </div>
-        </div>
-      </section>
-
       <Section tone="white" labelledBy="began">
-        <div className="split split--center">
-          <div className="span-5">
-            <div className="began-photo">
-              <Photo img={images.aboutBegan} ratio="4 / 5" sizes="(min-width: 960px) 40vw, 100vw" />
-              <div className="began-photo__badge" aria-hidden="true">
-                <strong>2022</strong>
-                <span>Founded in Dallas, Texas</span>
-              </div>
-            </div>
-          </div>
-          <div className="span-7 stack">
+        <div className="began">
+          <div className="began__copy stack">
             <h2 className="h2" id="began">Where It All Began</h2>
             <p className="lead">
               Project PRC Corporation was founded in 2022 by Charles Williams, who saw a need for affordable to low income housing and made the
@@ -99,48 +87,46 @@ export default function AboutPage() {
               <Button href="/contact/" variant="outline">Contact us</Button>
             </div>
           </div>
+          <div className="began__collage" aria-hidden="true">
+            <div className="began__a"><Image src={media(images.aboutBegan.path)} alt="" fill sizes="(min-width: 960px) 30vw, 70vw" /></div>
+            <div className="began__b"><Image src={media(images.aboutHero.path)} alt="" fill sizes="(min-width: 960px) 25vw, 60vw" /></div>
+            <div className="began__year"><strong>2022</strong><span>Founded by Charles Williams</span></div>
+          </div>
         </div>
       </Section>
 
       <Section labelledBy="what">
-        <div className="section-head section-head--center">
-          <h2 className="h2" id="what">What We Do</h2>
-          <p className="lead muted">Creating Partnerships and Building Communities with Purpose and Passion.</p>
-        </div>
-        <ul className="wcards">
-          {what.map((x) => (
-            <li className="wcard" key={x.t}>
-              <div className="wcard__head">
-                <span className="wcard__icon" aria-hidden="true"><svg viewBox="0 0 24 24">{x.icon}</svg></span>
+        <SectionHead title="What We Do" id="what">Creating Partnerships and Building Communities with Purpose and Passion.</SectionHead>
+        <ol className="rows">
+          {what.map((x, i) => (
+            <li className={`row${i % 2 ? " row--flip" : ""}`} key={x.t}>
+              <div className="row__img"><Image src={media(x.img.path)} alt={x.img.alt} fill sizes="(min-width: 900px) 45vw, 100vw" /></div>
+              <div className="row__copy">
+                <span className="row__icon" aria-hidden="true"><svg viewBox="0 0 24 24">{x.icon}</svg></span>
                 <h3>{x.t}</h3>
+                <p>{x.d}</p>
               </div>
-              <div className="wcard__img"><Image src={media(x.img.path)} alt={x.img.alt} fill sizes="(min-width: 900px) 33vw, 100vw" /></div>
-              <p>{x.d}</p>
             </li>
           ))}
-        </ul>
+        </ol>
       </Section>
 
       <CtaBand
         title="Make a Difference Today – Build a Brighter Future!"
-        actions={<><Button href="/donate-now/" variant="dark">Donate Now</Button><Button href="/volunteer/" variant="light">Become a Dreamer<Arrow /></Button></>}
+        actions={<><Button href="/donate-now/">Donate Now</Button><Button href="/volunteer/" variant="light">Become a Dreamer<Arrow /></Button></>}
       >
         Join us in the mission to provide affordable housing for those in need. Every donation counts, every action matters. Together, we can
         create homes and change lives.
       </CtaBand>
 
       <Section tone="white" labelledBy="board">
-        <div className="section-head section-head--center">
-          <h2 className="h2" id="board">Meet Our Board</h2>
-        </div>
-        <ul className="board">
+        <SectionHead title="Meet Our Board" id="board" />
+        <ul className="board2">
           {board.map((b) => (
-            <li className="board-card" key={b.name}>
-              <Image src={media(b.img.path)} alt={b.img.alt} fill sizes="(min-width: 1000px) 25vw, (min-width: 640px) 50vw, 100vw" />
-              <div className="board-card__name">
-                <strong>{b.name}</strong>
-                <span>{b.role}</span>
-              </div>
+            <li className="board2__card" key={b.name}>
+              <div className="board2__photo"><Image src={media(b.img.path)} alt={b.img.alt} fill sizes="(min-width: 1000px) 25vw, (min-width: 640px) 50vw, 100vw" /></div>
+              <h3>{b.name}</h3>
+              <p>{b.role}</p>
             </li>
           ))}
         </ul>

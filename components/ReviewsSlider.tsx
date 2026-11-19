@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 /* The seven Google reviews shown by the live site's Trustindex widget, newest first. */
 const reviews = [
@@ -36,101 +36,72 @@ function GoldStars({ size = 18 }: { size?: number }) {
   );
 }
 
-function Card({ r }: { r: (typeof reviews)[number] }) {
-  const [open, setOpen] = useState(false);
-  const long = r.text.length > 140;
+const withText = reviews.filter((r) => r.text);
+
+function Avatar({ r, size = 44 }: { r: (typeof reviews)[number]; size?: number }) {
   const [failed, setFailed] = useState(false);
-  return (
-    <article className="rcard">
-      <header className="rcard__head">
-        {failed ? (
-          <span className="rcard__initial" aria-hidden="true">{r.name[0]}</span>
-        ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img className="rcard__avatar" src={r.avatar} alt="" width={40} height={40} loading="lazy" referrerPolicy="no-referrer" onError={() => setFailed(true)} />
-        )}
-        <span className="rcard__who">
-          <strong>{r.name}</strong>
-          <span>{r.date}</span>
-        </span>
-        <GoogleG className="rcard__g" />
-      </header>
-      <div className="rcard__rating">
-        <GoldStars />
-        <svg className="rcard__verified" viewBox="0 0 24 24" role="img" aria-label="Verified review"><circle cx="12" cy="12" r="11" fill="#229CE0" /><path d="M7 12.5l3.2 3L17 9" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      </div>
-      {r.text ? (
-        <>
-          <p className={`rcard__text${long && !open ? " rcard__text--clamp" : ""}`}>{r.text}</p>
-          {long ? (
-            <button type="button" className="rcard__more" aria-expanded={open} onClick={() => setOpen(!open)}>
-              {open ? "Hide" : "Read more"}
-            </button>
-          ) : null}
-        </>
-      ) : (
-        <p className="rcard__text rcard__text--empty">Rated Project PRC 5 stars on Google.</p>
-      )}
-    </article>
-  );
+  if (failed) return <span className="rv-avatar rv-avatar--initial" style={{ width: size, height: size }} aria-hidden="true">{r.name[0]}</span>;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img className="rv-avatar" src={r.avatar} alt="" width={size} height={size} loading="lazy" referrerPolicy="no-referrer" onError={() => setFailed(true)} />;
 }
 
+/* Reviews: one large quote that rotates, the full list beside it, and the Google score. */
 export default function ReviewsSlider() {
-  const track = useRef<HTMLDivElement>(null);
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
-  const paused = useRef(false);
-
-  const update = useCallback(() => {
-    const el = track.current;
-    if (!el) return;
-    setAtStart(el.scrollLeft < 8);
-    setAtEnd(el.scrollLeft + el.clientWidth > el.scrollWidth - 8);
-  }, []);
-
-  const go = useCallback((dir: 1 | -1) => {
-    const el = track.current;
-    if (!el) return;
-    const card = el.querySelector<HTMLElement>(".rcard");
-    const step = card ? card.offsetWidth + 20 : el.clientWidth;
-    if (dir === 1 && el.scrollLeft + el.clientWidth > el.scrollWidth - 8) el.scrollTo({ left: 0, behavior: "smooth" });
-    else el.scrollBy({ left: dir * step, behavior: "smooth" });
-  }, []);
+  const [i, setI] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const r = withText[i];
 
   useEffect(() => {
-    update();
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
-    const t = window.setInterval(() => { if (!paused.current && document.visibilityState === "visible") go(1); }, 5500);
-    return () => window.clearInterval(t);
-  }, [go, update]);
+    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = window.setTimeout(() => setI((n) => (n + 1) % withText.length), 7000);
+    return () => window.clearTimeout(t);
+  }, [i, paused]);
 
   return (
-    <div className="greviews">
-      <div className="greviews__summary">
-        <strong className="greviews__excellent">Excellent</strong>
-        <GoldStars size={30} />
-        <span className="greviews__based">Based on <strong>7 reviews</strong></span>
-        <a className="greviews__google" href={GOOGLE_PROFILE} target="_blank" rel="noopener noreferrer" aria-label="Read Project PRC reviews on Google (opens in a new tab)">
-          <svg viewBox="0 0 272 92" aria-hidden="true"><text x="0" y="72" fontFamily="Arial, Helvetica, sans-serif" fontSize="84" fontWeight="500"><tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan></text></svg>
-        </a>
-      </div>
-      <div
-        className="greviews__viewport"
-        onMouseEnter={() => (paused.current = true)}
-        onMouseLeave={() => (paused.current = false)}
-        onFocus={() => (paused.current = true)}
-        onBlur={() => (paused.current = false)}
-      >
-        <button type="button" className="greviews__nav greviews__nav--prev" onClick={() => go(-1)} disabled={atStart} aria-label="Previous reviews">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
-        <div className="greviews__track" ref={track} onScroll={update} role="region" aria-label="Google reviews" tabIndex={0}>
-          {reviews.map((r) => <Card key={r.name} r={r} />)}
+    <div className="rv" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
+      <figure className="rv-feature" aria-live="polite">
+        <svg className="rv-feature__mark" viewBox="0 0 48 40" aria-hidden="true"><path d="M0 40V22C0 9 6 1.5 18 0l2 6c-6 1.6-9 5.6-9 12h9v22H0zm28 0V22C28 9 34 1.5 46 0l2 6c-6 1.6-9 5.6-9 12h9v22H28z" fill="currentColor" /></svg>
+        <blockquote key={r.name} className="rv-feature__quote">
+          <p>{r.text}</p>
+        </blockquote>
+        <figcaption className="rv-feature__who" key={r.name + "-who"}>
+          <Avatar r={r} size={48} />
+          <span>
+            <strong>{r.name}</strong>
+            <span>Google review, {r.date}</span>
+          </span>
+          <GoldStars size={16} />
+        </figcaption>
+        <div className="rv-feature__progress" aria-hidden="true">
+          {withText.map((x, n) => (
+            <span key={x.name} className={n === i ? "is-on" : n < i ? "is-done" : ""} style={n === i && !paused ? undefined : { animationPlayState: "paused" }} />
+          ))}
         </div>
-        <button type="button" className="greviews__nav greviews__nav--next" onClick={() => go(1)} aria-label={atEnd ? "Back to first review" : "Next reviews"}>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-        </button>
+      </figure>
+
+      <div className="rv-side">
+        <div className="rv-score">
+          <span className="rv-score__n">5.0</span>
+          <span className="rv-score__meta">
+            <GoldStars size={20} />
+            <span>Rated by 7 people on Google</span>
+          </span>
+          <GoogleG className="rv-score__g" />
+        </div>
+        <ul className="rv-list">
+          {withText.map((x, n) => (
+            <li key={x.name}>
+              <button type="button" className="rv-item" aria-pressed={n === i} onClick={() => setI(n)}>
+                <Avatar r={x} size={36} />
+                <span className="rv-item__body">
+                  <span className="rv-item__name">{x.name}</span>
+                  <span className="rv-item__text">{x.text}</span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <a className="rv-all" href={GOOGLE_PROFILE} target="_blank" rel="noopener noreferrer">Read all reviews on Google<span className="visually-hidden"> (opens in a new tab)</span></a>
       </div>
     </div>
   );

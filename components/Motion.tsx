@@ -15,8 +15,8 @@ import { useEffect } from "react";
 const AUTO = [
   ".section-head", ".section h2.h2", ".section .lead", ".photo", ".video", ".figure", ".steps li", ".facts > div",
   ".people li", ".project", ".post-list li", ".compare", ".faq", ".panel", ".checklist li", ".downloads li",
-  ".acard", ".board-card", ".wcard", ".mission-panel__col", ".ladder li", ".tabs", ".gallery__item",
-  ".greviews__summary", ".greviews__viewport", ".door", ".contact-list li", ".estimator", ".prose > *", ".grid > *",
+  ".board2__card", ".row", ".path__step", ".ladder li", ".tabs", ".gallery__item",
+  ".rv-feature", ".rv-side", ".explorer", ".began__copy", ".about-hero__media", ".contact-list li", ".estimator", ".prose > *", ".grid > *",
 ].join(",");
 
 export default function Motion() {

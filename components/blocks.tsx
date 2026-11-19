@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { giveFormUrl, org, PREVIEW } from "@/lib/site";
-import { images, media } from "@/lib/media";
 import ReviewsSlider from "./ReviewsSlider";
 import { Button, ContactDetails, Downloads } from "./ui";
 import { HubSpotForm } from "./interactive";
@@ -79,9 +77,9 @@ export function Reviews() {
 
 export function ReviewsBand({ title = "What people say about Project PRC" }: { title?: string }) {
   return (
-    <section className="reviews-band" aria-labelledby="reviews-band">
+    <section className="section reviews-band" aria-labelledby="reviews-band">
       <div className="container">
-        <h2 className="visually-hidden" id="reviews-band">{title}</h2>
+        <h2 className="h2 reviews-band__title" id="reviews-band">{title}</h2>
         <ReviewsSlider />
       </div>
     </section>
@@ -128,19 +126,19 @@ export function ContactAndResources({
 
 export function CtaBand({ title, children, actions, note }: { title: string; children?: ReactNode; actions: ReactNode; note?: ReactNode }) {
   return (
-    <section className="section section--tight" aria-label={title}>
-      <div className="container">
-        <div className="cta-panel" data-reveal="panel">
-          <div className="cta-panel__copy stack">
-            <h2 className="h2">{title}</h2>
-            {children ? <p>{children}</p> : null}
-            {note ? <p className="cta-panel__note">{note}</p> : null}
-            <div className="btn-row cta-panel__actions">{actions}</div>
-          </div>
-          <div className="cta-panel__art" aria-hidden="true">
-            <Image src={media(images.cta.path)} alt="" fill sizes="(min-width: 900px) 45vw, 100vw" />
-          </div>
+    <section className="cta2" aria-label={title}>
+      <svg className="cta2__lines" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <path d="M-20 380 L300 120 L620 380" />
+        <path d="M480 380 L820 70 L1160 380" />
+        <path d="M900 380 L1100 210 L1300 380" />
+      </svg>
+      <div className="container cta2__inner" data-reveal="panel">
+        <div className="cta2__copy">
+          <h2 className="h2">{title}</h2>
+          {children ? <p>{children}</p> : null}
+          {note ? <p className="cta2__note">{note}</p> : null}
         </div>
+        <div className="cta2__actions">{actions}</div>
       </div>
     </section>
   );
