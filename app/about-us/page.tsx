@@ -137,21 +137,21 @@ export default function AboutPage() {
           <div className="span-6"><h2 className="h2" id="projects-title">Current Projects</h2></div>
           <div className="span-6"><p className="lead muted">A Look at Our Journey: Transformative Projects That Bring Affordable Housing and Community Development to Life</p></div>
         </div>
-        <ul className="projects">
+        <ol className="plist">
           {projects.map((p) => (
-            <li className="project" key={p.name}>
-              <div className="project__img">
-                <Image src={media(p.img.path)} alt={p.img.alt} fill sizes="(min-width: 900px) 33vw, 100vw" />
-                <span className={`project__status${p.done ? " project__status--done" : ""}`}>{p.status}</span>
+            <li className={`plist__row${p.done ? " plist__row--done" : ""}`} key={p.name}>
+              <div className="plist__img">
+                <Image src={media(p.img.path)} alt={p.img.alt} fill sizes="(min-width: 900px) 280px, 100vw" />
               </div>
-              <div className="project__body">
+              <div className="plist__body">
+                <span className="plist__status">{p.status}</span>
                 <h3>{p.name}</h3>
                 <p className="muted">{p.detail}</p>
-                <p className="project__units"><span data-count={p.units}>{p.units}</span> units</p>
               </div>
+              <p className="plist__units"><span data-count={p.units}>{p.units}</span><small>units</small></p>
             </li>
           ))}
-        </ul>
+        </ol>
         <div className="btn-row" style={{ justifyContent: "center", marginTop: 40 }}>
           <Button href="/contact/">Let&apos;s Work Together<Arrow /></Button>
         </div>
