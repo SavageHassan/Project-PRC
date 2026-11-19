@@ -1,6 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
+import { images, media } from "@/lib/media";
 import { useEffect, useRef, useState } from "react";
 
 type Door = { who: string; title: string; desc: string; href: string; go: string; secondary?: { label: string; href: string } };
@@ -48,46 +50,6 @@ function Arrow() {
   );
 }
 
-/* Architectural elevation in the brand's roof shape. Lines draw in, then the windows light up. */
-function Building() {
-  const cols = [0, 1, 2, 3, 4, 5, 6];
-  const floors = [0, 1, 2];
-  return (
-    <svg className="bp" viewBox="-150 0 840 470" role="img" aria-label="Line drawing of an apartment building">
-      <g className="bp__lines">
-        <path d="M40 214 L280 92 L520 214" />
-        <path d="M84 192 L280 118 L476 192" className="bp__thin" />
-        <rect x="80" y="214" width="400" height="216" />
-        <path d="M80 286 H480 M80 358 H480" className="bp__thin" />
-        <path d="M250 430 V376 H310 V430" />
-        <path d="M-20 430 H580" />
-      </g>
-      <g className="bp__windows">
-        {floors.map((f) =>
-          cols.map((c) => {
-            if (f === 2 && (c === 3)) return null;
-            const x = 98 + c * 54;
-            const y = 232 + f * 72;
-            return <rect key={`${f}-${c}`} x={x} y={y} width="34" height="38" style={{ animationDelay: `${1.6 + ((f * 7 + c) % 9) * 0.12}s` }} />;
-          }),
-        )}
-      </g>
-      <g className="bp__dims">
-        <path d="M80 452 V444 M480 452 V444 M80 448 H480" />
-        <path d="M512 214 H504 M512 430 H504 M508 214 V430" />
-      </g>
-      <g className="bp__notes">
-        <path d="M480 250 H540" />
-        <text x="548" y="256">Student housing</text>
-        <path d="M80 322 H20" />
-        <text x="12" y="328" textAnchor="end">Low income housing</text>
-        <path d="M480 394 H540" />
-        <text x="548" y="400">Workforce housing</text>
-      </g>
-    </svg>
-  );
-}
-
 export default function AudienceHero() {
   const [active, setActive] = useState(0);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -117,7 +79,9 @@ export default function AudienceHero() {
 
   return (
     <section className="hero ahero" aria-labelledby="hero-title">
-      <div className="ahero__grid" aria-hidden="true" />
+      <div className="ahero__photo" aria-hidden="true">
+        <Image src={media(images.impact.path)} alt="" fill priority sizes="(min-width: 900px) 58vw, 100vw" />
+      </div>
       <div className="container ahero__inner">
         <div className="ahero__main">
           <h1 className="display ahero__title" id="hero-title">
@@ -158,8 +122,7 @@ export default function AudienceHero() {
           </div>
         </div>
 
-        <div className="ahero__drawing">
-          <Building />
+        <div className="ahero__side">
           <dl className="titleblock">
             <div><dt>Project</dt><dd>Project PRC Corporation</dd></div>
             <div><dt>Location</dt><dd>Dallas, Texas</dd></div>
