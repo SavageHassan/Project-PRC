@@ -15,7 +15,7 @@ import { useEffect } from "react";
 const AUTO = [
   ".section-head", ".section h2.h2", ".section .lead", ".photo", ".video", ".figure", ".steps li", ".facts > div",
   ".people li", ".project", ".post-list li", ".compare", ".faq", ".panel", ".checklist li", ".downloads li",
-  ".board2__card", ".row", ".path__step", ".ladder li", ".tabs", ".gallery__item",
+  ".board2__card", ".gscale__steps", ".plist__row", ".intro2__text", ".row", ".path__step", ".ladder li", ".tabs", ".gallery__item",
   ".rv-feature", ".rv-side", ".explorer", ".began__copy", ".about-hero__media", ".contact-list li", ".estimator", ".prose > *", ".grid > *",
 ].join(",");
 
