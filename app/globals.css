@@ -885,3 +885,24 @@ a:hover .photo img, .photo:hover img { transform: scale(1.04); }
 .board2__card:hover .board2__photo img { filter: none; transform: scale(1.04); }
 .board2__card h3 { font-size: 1.2rem; font-weight: 600; }
 .board2__card p { color: var(--mute); font-size: 0.9375rem; }
+
+/* ---------- shop ---------- */
+.shop { padding-block: clamp(48px, 7vw, 112px); background: var(--white); overflow: hidden; }
+.shop__grid { display: grid; gap: 48px; align-items: center; }
+@media (min-width: 960px) { .shop__grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
+.shop__copy { display: grid; gap: 22px; }
+.shop__alt { display: grid; gap: 6px; margin-top: 12px; padding: 18px 20px; border-radius: 14px; background: var(--paper); border-left: 3px solid var(--blue); }
+.shop__art { position: relative; aspect-ratio: 1; max-width: 520px; width: 100%; justify-self: center; border-radius: 50%; background: radial-gradient(circle at 50% 45%, var(--blue-tint), var(--paper) 70%); }
+.shop__tee { position: absolute; left: 50%; top: 50%; width: 62%; transform: translate(-50%, -50%); filter: drop-shadow(0 24px 30px rgba(15, 27, 49, 0.22)); }
+.shop__tee svg { display: block; width: 100%; height: auto; }
+.shop__tee path { fill: var(--white); stroke: #dfe3e8; stroke-width: 2; }
+.shop__tee--back { width: 50%; left: 70%; top: 40%; filter: none; opacity: 0.9; }
+.shop__tee--back path { fill: var(--navy); stroke: none; }
+.shop__logo { position: absolute; left: 50%; top: 38%; width: 34%; height: auto; transform: translateX(-50%); }
+.shop__tag { position: absolute; left: 6%; bottom: 14%; padding: 10px 16px; border-radius: 999px; background: var(--blue-btn); color: var(--white); font-weight: 700; font-size: 0.9375rem; box-shadow: var(--shadow); }
+@media (prefers-reduced-motion: no-preference) {
+  .js .shop__tee:not(.shop__tee--back) { animation: float 6s ease-in-out infinite; }
+  .js .shop__copy > * { opacity: 0; transform: translateY(16px); animation: rise 800ms var(--ease-out) forwards; }
+  .js .shop__copy > :nth-child(2) { animation-delay: 100ms; } .js .shop__copy > :nth-child(3) { animation-delay: 200ms; } .js .shop__copy > :nth-child(4) { animation-delay: 300ms; } .js .shop__copy > :nth-child(5) { animation-delay: 400ms; }
+}
+@keyframes float { 0%, 100% { transform: translate(-50%, -50%); } 50% { transform: translate(-50%, -54%); } }
