@@ -72,6 +72,13 @@ export default function Header() {
 
   return (
     <>
+      <div className="utility" role="region" aria-label="Contact details">
+        <div className="container utility__bar">
+          <span className="utility__hours">{org.hours}</span>
+          <a href={org.phone.href}>{org.phone.display}</a>
+          <a href={`mailto:${org.email}`} className="utility__email">{org.email}</a>
+        </div>
+      </div>
       <header className="site-header" data-scrolled={scrolled}>
         <div className="container site-header__bar">
           <Link href="/" className="site-header__logo" aria-label="Project PRC home">
