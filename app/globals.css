@@ -946,17 +946,10 @@ body { background: var(--draft); }
 .pcard, .figure, .rv-side, .merch__card, .project, .wcard, .board2__card, .path__n, .explorer__caption, .shop__alt, .panel, .people li, .began__year, .rcard { box-shadow: none; }
 .pcard, .figure, .rv-side, .merch__card, .project { background-color: var(--white); border: 1px solid var(--bp-line); }
 .pcard:hover, .merch__card:hover, .project:hover, .figure:hover { box-shadow: 8px 8px 0 rgba(21, 118, 176, 0.14); transform: translate(-3px, -3px); }
-.photo, .row__img, .mission__photo, .explorer__stage, .video, .board2__photo, .began__a, .began__b, .project__img, .shop-hero__banner { outline: 1px solid var(--bp-line); outline-offset: 7px; box-shadow: none; }
 .video, .shop-hero__banner, .explorer__stage { overflow: hidden; }
 .began__b { border: 0; }
 .explorer__caption { border: 1px solid var(--bp-line); background: var(--white); }
 
-/* photos: blueprint tint, full colour on hover */
-.photo img, .row__img img, .mission__photo img, .explorer__img img, .began__a img, .began__b img, .project__img img, .board2__photo img, .video__poster {
-  filter: grayscale(1) sepia(0.3) hue-rotate(168deg) saturate(2.4) brightness(0.98) contrast(1.05);
-  transition: filter 600ms var(--ease), transform 900ms var(--ease-out);
-}
-.photo:hover img, .row:hover .row__img img, .mission__photo:hover img, .explorer__panel.is-active .explorer__img img, .began__collage:hover img, .project:hover .project__img img, .board2__card:hover .board2__photo img, .video__btn:hover .video__poster { filter: none; }
 
 /* ---------- hero: blueprint ---------- */
 .ahero::before { display: none; }
@@ -1000,3 +993,18 @@ body { background: var(--draft); }
 .foot__social a { border-radius: 0; }
 .merch__status, .project__status, .shop-hero__badge, .pill { border-radius: 0; }
 .board2__photo::after { height: 2px; }
+
+/* ---------- v5 hero: real photo, blueprint ground ---------- */
+.ahero { position: relative; }
+.ahero .ahero__title { text-transform: none; }
+.ahero__photo { position: relative; height: 300px; overflow: hidden; }
+.ahero__photo img { object-fit: cover; object-position: 50% 30%; }
+.ahero__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(15, 27, 49, 0) 55%, var(--navy) 100%); }
+@media (min-width: 1000px) {
+  .ahero__photo { position: absolute; top: 0; right: 0; bottom: 0; width: 52%; height: auto; }
+  .ahero__photo::after { background: linear-gradient(90deg, var(--navy) 0%, rgba(15, 27, 49, 0.35) 30%, rgba(15, 27, 49, 0) 60%); }
+  .ahero__inner { position: relative; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); min-height: min(84vh, 760px); align-items: end; }
+  .ahero__side { align-self: end; }
+}
+.ahero__side .titleblock { background: rgba(15, 27, 49, 0.92); }
+@media (prefers-reduced-motion: no-preference) { .js .ahero__photo img { animation: kenburns 22s var(--ease) both alternate infinite; } }
