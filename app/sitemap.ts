@@ -6,7 +6,7 @@ import { posts } from "@/content/posts";
 const pages = [
   "", "about-us", "testimonials", "join-noc-tenants", "join-noc-apartments", "network-of-communities",
   "rental-assistance-or-eviction-avoidance-application", "network-of-communities-application-for-properties",
-  "housing-scholars-program", "housing-scholars-application", "financial-literacy-workshops", "rent-subsidy-program",
+  "housing-scholars-program", "housing-scholars-application", "financial-literacy-workshops", "rent-subsidy-program", "shop",
   "corporate-partnerships", "donate-now", "volunteer", "our-events", "blog", "magazine", "resources", "contact",
   "privacy-policy", "refund-and-returns-policy",
 ];
