@@ -260,17 +260,46 @@ export function NativeForm({ form, fields, submitLabel, successMessage }: { form
 }
 
 /* ---------------- Click-to-load video (keeps third-party players off the critical path) ---------------- */
-export function Video({ provider, id, title }: { provider: "vimeo" | "youtube"; id: string; title: string }) {
+/* Poster frames are the same thumbnails Vimeo and YouTube show on the live site. */
+const posters: Record<string, string> = {
+  "1188830283": "https://i.vimeocdn.com/video/2153201025-5f65b31382046f606bc4b5305bd9be3005d8412c3910d472bd8bdd8218029013-d_1280",
+  "1141546313": "https://i.vimeocdn.com/video/2088968421-ee91dada0ad0dddfb5d6ce666b26fab14585670956cb9ca082a37e16c4a60cb9-d_1280",
+  "1141659161": "https://i.vimeocdn.com/video/2089134062-3666ca47b6e31de924d723604685703d41c899420a7a8bda59b524a3b6fc45f7-d_1280",
+};
+const posterFor = (provider: "vimeo" | "youtube", id: string) =>
+  provider === "youtube" ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : posters[id];
+
+function PlayFace({ title, duration }: { title: string; duration?: string }) {
+  return (
+    <>
+      <span className="video__shade" aria-hidden="true" />
+      <span className="video__play" aria-hidden="true">
+        <span className="video__ring" />
+        <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+      </span>
+      <span className="video__meta">
+        <span className="video__title">{title}</span>
+        {duration ? <span className="video__dur">{duration}</span> : null}
+      </span>
+    </>
+  );
+}
+
+export function Video({ provider, id, title, duration }: { provider: "vimeo" | "youtube"; id: string; title: string; duration?: string }) {
   const [play, setPlay] = useState(false);
+  const poster = posterFor(provider, id);
+  const [posterOk, setPosterOk] = useState(true);
+  // Loaded straight from Vimeo/YouTube's CDN (unoptimized) so the poster never depends on the image optimizer
+  const img = poster && posterOk
+    ? <Image src={poster} alt="" fill unoptimized sizes="(min-width: 960px) 50vw, 100vw" className="video__poster" onError={() => setPosterOk(false)} />
+    : null;
   if (PREVIEW) {
     const page = provider === "vimeo" ? `https://vimeo.com/${id}` : `https://www.youtube.com/watch?v=${id}`;
     return (
       <div className="video">
-        <a href={page} target="_blank" rel="noopener noreferrer" className="video__link" aria-label={`${title} (opens ${provider === "vimeo" ? "Vimeo" : "YouTube"} in a new tab)`}>
-          <span className="video__play">
-            <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#219CDF" /><path d="M23 18l15 10-15 10z" fill="#24272D" /></svg>
-            {title}
-          </span>
+        <a href={page} target="_blank" rel="noopener noreferrer" className="video__btn" aria-label={`${title} (opens ${provider === "vimeo" ? "Vimeo" : "YouTube"} in a new tab)`}>
+          {img}
+          <PlayFace title={title} duration={duration} />
         </a>
       </div>
     );
@@ -281,13 +310,11 @@ export function Video({ provider, id, title }: { provider: "vimeo" | "youtube"; 
   return (
     <div className="video">
       {play ? (
-        <iframe src={src} title={title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen loading="lazy" />
+        <iframe src={src} title={title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
       ) : (
-        <button type="button" onClick={() => setPlay(true)} aria-label={`Play video: ${title}`}>
-          <span className="video__play">
-            <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#219CDF" /><path d="M23 18l15 10-15 10z" fill="#24272D" /></svg>
-            {title}
-          </span>
+        <button type="button" className="video__btn" onClick={() => setPlay(true)} aria-label={`Play video: ${title}`}>
+          {img}
+          <PlayFace title={title} duration={duration} />
         </button>
       )}
     </div>

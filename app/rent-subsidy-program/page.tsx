@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Button, Checklist, ContactDetails, Facts, PageHero, Section, SectionHead, Steps } from "@/components/ui";
-import { DonationLadder, Reviews } from "@/components/blocks";
+import { DonationLadder, ReviewsBand } from "@/components/blocks";
 import { images } from "@/lib/media";
 
 export const metadata: Metadata = {
@@ -130,7 +130,7 @@ export default function RentSubsidyPage() {
         </div>
       </Section>
 
-      <Section tone="white" labelledBy="reviews"><h2 className="visually-hidden" id="reviews">Reviews</h2><Reviews /></Section>
+      <ReviewsBand />
     </>
   );
 }

@@ -1,5 +1,8 @@
+import Image from "next/image";
 import { giveFormUrl, org, PREVIEW } from "@/lib/site";
-import { Button, ContactDetails, Downloads, Stars } from "./ui";
+import { images, media } from "@/lib/media";
+import ReviewsSlider from "./ReviewsSlider";
+import { Button, ContactDetails, Downloads } from "./ui";
 import { HubSpotForm } from "./interactive";
 import type { ReactNode } from "react";
 
@@ -16,6 +19,7 @@ export function DonationLadder({ light }: { light?: boolean }) {
     <ul className={`ladder${light ? " ladder--light" : ""}`}>
       {ladder.map((l) => (
         <li key={l.amount}>
+          <span className="ladder__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.3-9.2C1.4 8.3 3.6 5 7 5c2 0 3.6 1.1 5 2.8C13.4 6.1 15 5 17 5c3.4 0 5.6 3.3 4.3 6.8C19.5 16.4 12 21 12 21z" fill="currentColor" /></svg></span>
           <strong>{l.amount}<small> /mo</small></strong>
           <span>{l.text}</span>
         </li>
@@ -68,30 +72,19 @@ export function DonateBand({ heading = "Your gift makes a real difference." }: {
   );
 }
 
-/* Google reviews (static copy of the 7 reviews shown by the live Trustindex widget). */
-export const reviews = [
-  { name: "Linda R", date: "January 30, 2023", text: "When looking to align our mutual interests, connecting with the non-profit organization, PROJECT PRC Corp, we find ourselves happily jumping up and down, as we applaud their vision in making the world a better place, committing to building affordable housing for local communities. Kudos!" },
-  { name: "Hcj", date: "August 26, 2025", text: "I truly admire Project PRC’s commitment to building affordable housing and revitalizing neighborhoods. Their partnerships with schools and local organizations show a real dedication to long-term solutions. They are making a lasting difference." },
-  { name: "Carlos H", date: "August 26, 2025", text: "Fantastic folks who are dedicated to making things better." },
-  { name: "Desayn C", date: "September 2, 2025", text: "I worked with PRC on projects through Upwork and it was a really great experience. Communication was clear, the process went smoothly, and everything felt easy to collaborate on. Reccomended!" },
-  { name: "Georgi D", date: "August 26, 2025", text: "I worked with PRC on a couple of projects and they were always professional and friendly throughout. I would happily collaborate again in the future. Highly recommend!" },
-  { name: "Teresa T", date: "July 17, 2025", text: "They are doing good work!" },
-];
+/* Google reviews: the live site's Trustindex layout, rebuilt as a light slider. */
+export function Reviews() {
+  return <ReviewsSlider />;
+}
 
-export function Reviews({ limit = 6 }: { limit?: number }) {
+export function ReviewsBand({ title = "What people say about Project PRC" }: { title?: string }) {
   return (
-    <div className="stack stack--lg">
-      <p className="rating-summary"><Stars label="Rated 5 out of 5" /> <strong>Excellent</strong> <span className="muted">5.0 on Google, based on 7 reviews</span></p>
-      <div className="reviews">
-        {reviews.slice(0, limit).map((r) => (
-          <figure className="review" key={r.name}>
-            <Stars />
-            <blockquote><p>{r.text}</p></blockquote>
-            <figcaption><strong>{r.name}</strong>, Google review, {r.date}</figcaption>
-          </figure>
-        ))}
+    <section className="reviews-band" aria-labelledby="reviews-band">
+      <div className="container">
+        <h2 className="visually-hidden" id="reviews-band">{title}</h2>
+        <ReviewsSlider />
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -135,14 +128,19 @@ export function ContactAndResources({
 
 export function CtaBand({ title, children, actions, note }: { title: string; children?: ReactNode; actions: ReactNode; note?: ReactNode }) {
   return (
-    <section className="section section--tight section--line" aria-label={title}>
-      <div className="container cta-band">
-        <div className="stack">
-          <h2 className="h2">{title}</h2>
-          {children ? <p className="lead muted">{children}</p> : null}
-          {note ? <p className="muted measure">{note}</p> : null}
+    <section className="section section--tight" aria-label={title}>
+      <div className="container">
+        <div className="cta-panel" data-reveal="panel">
+          <div className="cta-panel__copy stack">
+            <h2 className="h2">{title}</h2>
+            {children ? <p>{children}</p> : null}
+            {note ? <p className="cta-panel__note">{note}</p> : null}
+            <div className="btn-row cta-panel__actions">{actions}</div>
+          </div>
+          <div className="cta-panel__art" aria-hidden="true">
+            <Image src={media(images.cta.path)} alt="" fill sizes="(min-width: 900px) 45vw, 100vw" />
+          </div>
         </div>
-        <div className="btn-row">{actions}</div>
       </div>
     </section>
   );

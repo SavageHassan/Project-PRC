@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { PageHero, Section, SectionHead } from "@/components/ui";
-import { DonateBand, Reviews } from "@/components/blocks";
+import { PageHero, Section } from "@/components/ui";
+import { DonateBand, ReviewsBand } from "@/components/blocks";
 import { Video } from "@/components/interactive";
 
 export const metadata: Metadata = {
@@ -23,10 +23,7 @@ export default function TestimonialsPage() {
           <Video provider="youtube" id="-2L89EGaBco" title="Watch: Project PRC success story" />
         </div>
       </Section>
-      <Section labelledBy="reviews">
-        <SectionHead title="Reviews" id="reviews" />
-        <Reviews />
-      </Section>
+      <ReviewsBand title="Reviews" />
       <DonateBand heading="Help Students Stay Enrolled… When They Need It Most." />
     </>
   );

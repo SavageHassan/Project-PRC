@@ -44,7 +44,7 @@ export function SectionHead({ label, title, id, children }: { label?: string; ti
 type ButtonProps = {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "dark" | "outline";
+  variant?: "primary" | "dark" | "outline" | "light";
   size?: "sm";
   external?: boolean;
   download?: boolean;

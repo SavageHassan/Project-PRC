@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Bullets, Button, Checklist, ContactDetails, Downloads, Faq, PageHero, Photo, Section, SectionHead } from "@/components/ui";
-import { Reviews } from "@/components/blocks";
+import { ReviewsBand } from "@/components/blocks";
 import { NativeForm } from "@/components/interactive";
 import { images, media } from "@/lib/media";
 import { downloads, org } from "@/lib/site";
@@ -144,7 +144,7 @@ export default function CorporatePage() {
         </div>
       </Section>
 
-      <Section tone="white" labelledBy="reviews"><h2 className="visually-hidden" id="reviews">Reviews</h2><Reviews /></Section>
+      <ReviewsBand />
     </>
   );
 }

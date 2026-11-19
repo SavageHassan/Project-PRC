@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Section } from "@/components/ui";
-import { DonationLadder, GiveForm, Reviews } from "@/components/blocks";
+import { DonationLadder, GiveForm, ReviewsBand } from "@/components/blocks";
 import { Video } from "@/components/interactive";
 import { org } from "@/lib/site";
 
@@ -62,7 +62,7 @@ export default function DonatePage() {
         </div>
       </Section>
 
-      <Section tone="white" labelledBy="reviews"><h2 className="visually-hidden" id="reviews">Reviews</h2><Reviews /></Section>
+      <ReviewsBand />
     </>
   );
 }

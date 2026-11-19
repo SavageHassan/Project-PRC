@@ -13,7 +13,11 @@ const config: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: remote ? [{ protocol: remote.protocol.replace(":", "") as "https", hostname: remote.hostname, pathname: `${remote.pathname.replace(/\/$/, "")}/**` }] : [],
+    remotePatterns: [
+      ...(remote ? [{ protocol: remote.protocol.replace(":", "") as "https", hostname: remote.hostname, pathname: `${remote.pathname.replace(/\/$/, "")}/**` }] : []),
+      { protocol: "https" as const, hostname: "i.vimeocdn.com", pathname: "/video/**" },
+      { protocol: "https" as const, hostname: "i.ytimg.com", pathname: "/vi/**" },
+    ],
     unoptimized: isPreviewExport || process.env.NEXT_IMAGE_UNOPTIMIZED === "1",
   },
   ...(isPreviewExport ? {} : { redirects, headers }),

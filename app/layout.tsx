@@ -1,18 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import localFont from "next/font/local";
+import { Open_Sans, Raleway } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Motion from "@/components/Motion";
 import { SITE_URL, org } from "@/lib/site";
 import { media } from "@/lib/media";
 import "./globals.css";
 
-const montserrat = localFont({
-  src: "./fonts/montserrat-latin-wght-normal.woff2",
-  weight: "100 900",
-  style: "normal",
-  display: "swap",
-  variable: "--font-montserrat",
-});
+// Project PRC's live typefaces: Raleway for headings, Open Sans for text (self-hosted by next/font at build time).
+const raleway = Raleway({ subsets: ["latin"], display: "swap", variable: "--font-raleway" });
+const openSans = Open_Sans({ subsets: ["latin"], display: "swap", variable: "--font-open-sans" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -32,7 +29,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", site: "@projectprc" },
 };
 
-export const viewport: Viewport = { themeColor: "#f7f5f4", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#ffffff", width: "device-width", initialScale: 1 };
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -60,7 +57,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={montserrat.variable} suppressHydrationWarning>
+    <html lang="en" className={`${raleway.variable} ${openSans.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
@@ -70,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <Motion />
       </body>
     </html>
   );
